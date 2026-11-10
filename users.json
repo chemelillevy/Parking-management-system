@@ -1,0 +1,13 @@
+{
+  "USR0001": {
+    "user_id": "USR0001",
+    "username": "admin",
+    "email": "admin@parking.com",
+    "full_name": "System Administrator",
+    "phone": "555-0000",
+    "role": "admin",
+    "password_hash": "240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9",
+    "created_at": "2026-11-02T09:05:34.728962",
+    "is_active": true
+  }
+}
