@@ -5,12 +5,12 @@ A professional graphical user interface using CustomTkinter that mimics
 the clean, modern design of QuickBooks accounting software.
 
 QuickBooks Design Language:
-- Primary Green: #2CA58D
-- Dark Green: #1E7A6A
-- Light Green: #E8F5F0
+- Primary Green: #2CA01C
+- Dark Green: #237804
+- Light Green: #E9F5E9
 - White: #FFFFFF
-- Light Gray: #F5F7FA
-- Medium Gray: #E0E6ED
+- Light Gray: #F7F8F9
+- Medium Gray: #E5E7EB
 - Dark Gray: #374151
 - Text: #1F2937
 - Border: #D1D5DB
@@ -31,12 +31,12 @@ from src.parking.exceptions import LotFullError, VehicleAlreadyParkedError
 from src.parking.auth import AuthenticationSystem
 
 # QuickBooks Color Palette
-QB_GREEN = "#2CA58D"
-QB_DARK_GREEN = "#1E7A6A"
-QB_LIGHT_GREEN = "#E8F5F0"
+QB_GREEN = "#2CA01C"
+QB_DARK_GREEN = "#237804"
+QB_LIGHT_GREEN = "#E9F5E9"
 QB_WHITE = "#FFFFFF"
-QB_LIGHT_GRAY = "#F5F7FA"
-QB_MEDIUM_GRAY = "#E0E6ED"
+QB_LIGHT_GRAY = "#F7F8F9"
+QB_MEDIUM_GRAY = "#E5E7EB"
 QB_DARK_GRAY = "#374151"
 QB_TEXT = "#1F2937"
 QB_BORDER = "#D1D5DB"
@@ -98,7 +98,7 @@ class ParkingSystemGUI:
 
     def _create_sidebar(self):
         """Create the sidebar navigation with QuickBooks styling."""
-        self.sidebar = ctk.CTkFrame(self.root, width=280, corner_radius=0, fg_color=QB_DARK_GRAY)
+        self.sidebar = ctk.CTkFrame(self.root, width=280, corner_radius=0, fg_color=QB_WHITE, border_width=1, border_color=QB_BORDER)
         self.sidebar.pack(side="left", fill="y")
         self.sidebar.pack_propagate(False)
 
@@ -123,7 +123,7 @@ class ParkingSystemGUI:
             logo_frame,
             text="Parking\nManagement",
             font=ctk.CTkFont(size=16, weight="bold"),
-            text_color="white",
+            text_color=QB_TEXT,
             anchor="w"
         )
         title_label.pack(anchor="w", pady=(15, 0))
@@ -142,7 +142,7 @@ class ParkingSystemGUI:
             self.sidebar,
             text="MENU",
             font=ctk.CTkFont(size=11, weight="bold"),
-            text_color=QB_MEDIUM_GRAY,
+            text_color="#9CA3AF",
             anchor="w"
         )
         nav_label.pack(pady=(30, 10), padx=20, fill="x")
@@ -154,8 +154,8 @@ class ParkingSystemGUI:
                 font=ctk.CTkFont(size=14),
                 height=45,
                 fg_color="transparent",
-                text_color="white",
-                hover_color=QB_DARK_GREEN,
+                text_color=QB_DARK_GRAY,
+                hover_color=QB_LIGHT_GREEN,
                 anchor="w",
                 command=lambda cmd=command, idx=i: self._navigate_to(cmd, idx)
             )
@@ -163,7 +163,7 @@ class ParkingSystemGUI:
             self.nav_buttons.append(btn)
 
         # Bottom section
-        ctk.CTkFrame(self.sidebar, height=1, fg_color=QB_MEDIUM_GRAY).pack(fill="x", pady=30, padx=20)
+        ctk.CTkFrame(self.sidebar, height=1, fg_color=QB_BORDER).pack(fill="x", pady=30, padx=20)
 
         user_frame = ctk.CTkFrame(self.sidebar, fg_color="transparent")
         user_frame.pack(side="bottom", pady=20, padx=20, fill="x")
@@ -172,9 +172,11 @@ class ParkingSystemGUI:
         user_avatar.pack(side="left")
         user_avatar.pack_propagate(False)
 
+        current_user = self.auth_system.get_current_user()
+        user_initials = "".join(w[0] for w in (current_user.full_name if current_user else "Guest").split()[:2]).upper() or "G"
         user_initial = ctk.CTkLabel(
             user_avatar,
-            text="AJ",
+            text=user_initials,
             font=ctk.CTkFont(size=16, weight="bold"),
             text_color="white"
         )
@@ -183,12 +185,11 @@ class ParkingSystemGUI:
         user_info = ctk.CTkFrame(user_frame, fg_color="transparent")
         user_info.pack(side="left", padx=12, fill="x", expand=True)
 
-        current_user = self.auth_system.get_current_user()
         ctk.CTkLabel(
             user_info,
             text=current_user.full_name if current_user else "Guest",
             font=ctk.CTkFont(size=13, weight="bold"),
-            text_color="white",
+            text_color=QB_TEXT,
             anchor="w"
         ).pack(anchor="w")
 
@@ -196,7 +197,7 @@ class ParkingSystemGUI:
             user_info,
             text=current_user.role.capitalize() if current_user else "Guest",
             font=ctk.CTkFont(size=11),
-            text_color=QB_MEDIUM_GRAY,
+            text_color="#6B7280",
             anchor="w"
         ).pack(anchor="w")
 
@@ -207,8 +208,8 @@ class ParkingSystemGUI:
             font=ctk.CTkFont(size=13),
             height=40,
             fg_color="transparent",
-            text_color="#EF4444",
-            hover_color="#7F1D1D",
+            text_color="#DC2626",
+            hover_color="#FEE2E2",
             command=self._handle_logout
         )
         logout_btn.pack(side="bottom", pady=10, padx=15, fill="x")
@@ -221,7 +222,7 @@ class ParkingSystemGUI:
             height=40,
             fg_color="transparent",
             text_color="#9CA3AF",
-            hover_color="#4B5563",
+            hover_color=QB_LIGHT_GRAY,
             command=self.root.quit
         )
         exit_btn.pack(side="bottom", pady=(0, 10), padx=15, fill="x")
@@ -230,10 +231,10 @@ class ParkingSystemGUI:
         """Navigate to a page and update button states."""
         # Reset all buttons
         for btn in self.nav_buttons:
-            btn.configure(fg_color="transparent", text_color="white")
+            btn.configure(fg_color="transparent", text_color=QB_DARK_GRAY, hover_color=QB_LIGHT_GREEN)
 
         # Highlight selected button with QuickBooks green
-        self.nav_buttons[index].configure(fg_color=QB_GREEN, text_color="white")
+        self.nav_buttons[index].configure(fg_color=QB_GREEN, text_color="white", hover_color=QB_DARK_GREEN)
 
         # Execute command
         command()
@@ -415,7 +416,7 @@ class ParkingSystemGUI:
             ctk.CTkLabel(activity_scroll, text="No recent activity", text_color="#9CA3AF", font=ctk.CTkFont(size=14)).pack(pady=40)
 
         # Highlight dashboard button
-        self.nav_buttons[0].configure(fg_color=QB_GREEN, text_color="white")
+        self.nav_buttons[0].configure(fg_color=QB_GREEN, text_color="white", hover_color=QB_DARK_GREEN)
 
     def _darken_color(self, hex_color: str, factor: float = 0.8) -> str:
         """Darken a hex color by a factor."""

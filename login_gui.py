@@ -9,12 +9,12 @@ from tkinter import messagebox
 from src.parking.auth import AuthenticationSystem, User
 
 # QuickBooks Color Palette
-QB_GREEN = "#2CA58D"
-QB_DARK_GREEN = "#1E7A6A"
-QB_LIGHT_GREEN = "#E8F5F0"
+QB_GREEN = "#2CA01C"
+QB_DARK_GREEN = "#237804"
+QB_LIGHT_GREEN = "#E9F5E9"
 QB_WHITE = "#FFFFFF"
-QB_LIGHT_GRAY = "#F5F7FA"
-QB_MEDIUM_GRAY = "#E0E6ED"
+QB_LIGHT_GRAY = "#F7F8F9"
+QB_MEDIUM_GRAY = "#E5E7EB"
 QB_DARK_GRAY = "#374151"
 QB_TEXT = "#1F2937"
 QB_BORDER = "#D1D5DB"
